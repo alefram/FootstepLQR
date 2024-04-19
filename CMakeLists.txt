@@ -10,6 +10,7 @@ enable_language(CXX)
 
 add_executable(qldsim main.cc)
 
+#add mujoco library
 set(MUJOCO_INCLUDE_DIR /home/alexis/dev/mujoco-3.1.3/include/)
 set(MUJOCO_LIB_DIR /home/alexis/dev/mujoco-3.1.3/lib/)
 
@@ -18,3 +19,7 @@ message(STATUS "Mujoco library path ${MUJOCO_LIB_DIR}")
 target_include_directories(qldsim PUBLIC "${MUJOCO_INCLUDE_DIR}")
 target_link_directories(qldsim PUBLIC "${MUJOCO_LIB_DIR}")
 target_link_libraries(qldsim mujoco)
+
+# add GLFW library
+find_package(glfw3 REQUIRED)
+target_link_libraries(qldsim glfw)
