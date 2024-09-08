@@ -1,4 +1,4 @@
-# QLDsim
+# FootstepLQR
 
-This is a implementation of the paper Learning Quadruped Locomotion Using
-Differentiable Simulation [link](https://arxiv.org/abs/2403.14864)
+This is a implementation of the paper Robust Footstep Planning and LQR Control for Dynamic Quadrupedal Locomotion
+ [link](https://arxiv.org/abs/2010.12326)
