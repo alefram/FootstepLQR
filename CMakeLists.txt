@@ -13,10 +13,12 @@ enable_language(CXX)
 # source and header directory
 set(SOURCE_DIR src)
 set(HEADER_DIR src/visualization)
+set(HEADER_DIR src/model)
 
 add_executable(qldsim 
     ${SOURCE_DIR}/main.cc
     ${SOURCE_DIR}/visualization/visualization.cc
+    ${SOURCE_DIR}/model/model.cc
 )
 
 #add mujoco library
