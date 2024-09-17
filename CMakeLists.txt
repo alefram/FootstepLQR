@@ -32,8 +32,9 @@ message(STATUS "Mujoco library path ${MUJOCO_LIB_DIR}")
 target_include_directories(qldsim PRIVATE "${MUJOCO_INCLUDE_DIR}")
 target_link_directories(qldsim PRIVATE "${MUJOCO_LIB_DIR}")
 
-# add GLFW library
+# add GLFW library and xtensor
 find_package(glfw3 REQUIRED)
+find_package(xtensor REQUIRED)
 
-target_link_libraries(qldsim PRIVATE glfw mujoco)
+target_link_libraries(qldsim PRIVATE glfw mujoco xtensor)
 
