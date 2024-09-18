@@ -2,32 +2,31 @@
 #define MODEL_H
 
 #include <mujoco/mujoco.h>
-#include <vector>
+#include <xtensor/xarray.hpp>
 
 class Model {
 public:
     //constructor
-    Model(const mjModel* model, mjData* data, mjtNum epsilon, bool centered);
+    Model(const mjModel* model, mjData* data);
 
-    // compute the transition matrices of the discrete model
-    void computeTransitionMatrices();
+    // compute the next center of mass coordinate
+    void step(double dt);
+
+    //get the current center of mass coordinate
+    xt::xarray<double> getCoM() const;
     
-    //get constant reference of the transition matrices
-    const std::vector<mjtNum>& getA() const;
-    const std::vector<mjtNum>& getB() const;
-    const std::vector<mjtNum>& getC() const;
-    const std::vector<mjtNum>& getD() const;
-
 private:
-    const mjModel* m_model;
-    mjData* m_data;
-    mjtNum m_epsilon;
-    bool m_centered;
+    const mjModel* model;
+    mjData* data;
+    double g;                   //gravity
+    double z_CoM;               // center of mass in z
+    double w;                   // natural frequency
+    double px, py;              // zero moment point
+    xt::xarray<double> x_CoM;   // Current x CoM
+    xt::xarray<double> y_CoM;   // Current y CoM
 
-    std::vector<mjtNum> m_A;
-    std::vector<mjtNum> m_B;
-    std::vector<mjtNum> m_C;
-    std::vector<mjtNum> m_D;
+    void computeA(double t, xt::xarray<double>& A);
+    void computeB(double t, xt::xarray<double>& B);
 };
 
 #endif // MODEL_H

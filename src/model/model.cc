@@ -1,31 +1,32 @@
 #include "model.h"
+#include <cmath>
 #include <mujoco/mujoco.h>
+#include <xtensor/xarray.hpp>
 
-Model::Model(const mjModel* model, mjData* data, mjtNum epsilon, bool centered): 
-    m_model(model), m_data(data), m_epsilon(epsilon), m_centered(centered) {}
-
-void Model::computeTransitionMatrices() {
-    //define dimensions
-    int nv = m_model->nv; 
-    int na = m_model->na; 
-    int nu = m_model->nu; 
-    int nsensordata = m_model->nsensordata; 
-    
-    //resize the matrices
-    m_A.resize((2 * nv + na) * (2 * nv + na));
-    m_B.resize((2 * nv + na) * nu);
-    m_C.resize(nsensordata * (2 * nv + na));
-    m_D.resize(nsensordata * nu);
-
-    //update matrices
-    mjd_transitionFD(m_model, m_data, 
-                     m_epsilon, m_centered, 
-                     m_A.data(), m_B.data(),
-                     m_C.data(), m_D.data());
+Model::Model(const mjModel* model, mjData* data): model(model), data(data) {
+    g = model->opt.gravity[2];
+    // z_CoM = data->xipos[0][2]; TODO:revisar
+    w = std::sqrt(g / z_CoM);
+    px = 0.0; //TODO:calcular con mujoco
+    py = 0.0; //TODO: calcular con mujoco
+    // x_CoM = { data->xipos[0], 0.0 }; //TODO:revisar x0
+    // y_CoM = { data->xipos[1], 0.0 }; //TODO: revisar el y0
 }
 
-// Getter methods for constant reference of transition matrices
-const std::vector<mjtNum>& Model::getA() const { return m_A; }
-const std::vector<mjtNum>& Model::getB() const { return m_B; }  
-const std::vector<mjtNum>& Model::getC() const { return m_C; }  
-const std::vector<mjtNum>& Model::getD() const { return m_D; }  
+void Model::computeA(double t, xt::xarray<double>& A) {
+    //TODO: crear implementación
+}
+
+void Model::computeB(double t, xt::xarray<double>& B) {
+    //TODO: crear implementación
+}
+
+void Model::step(double dt) {
+    //TODO: crear implementación
+}
+
+xt::xarray<double> Model::getCoM() const {
+    return { x_CoM[0], y_CoM[0] };
+}
+
+
