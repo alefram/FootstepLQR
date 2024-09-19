@@ -2,6 +2,7 @@
 #include <cmath>
 #include <mujoco/mujoco.h>
 #include <xtensor/xarray.hpp>
+#include <xtensor/xshape.hpp>
 
 Model::Model(const mjModel* model, mjData* data): model(model), data(data) {
     g = model->opt.gravity[2];
@@ -14,11 +15,18 @@ Model::Model(const mjModel* model, mjData* data): model(model), data(data) {
 }
 
 void Model::computeA(double t, xt::xarray<double>& A) {
-    //TODO: crear implementación
+    double cosh_wt = std::cosh(w * t);
+    double sinh_wt = std::sinh(w * t);
+
+    A = xt::xarray<double>({{cosh_wt, sinh_wt/w}, 
+                            {w * sinh_wt, cosh_wt}});
 }
 
 void Model::computeB(double t, xt::xarray<double>& B) {
-    //TODO: crear implementación
+    double cosh_wt = std::cosh(w * t);
+    double sinh_wt = std::sinh(w * t);
+    
+    B = xt::xarray<double>({{1 - cosh_wt, -w * sinh_wt}});
 }
 
 void Model::step(double dt) {
@@ -26,7 +34,7 @@ void Model::step(double dt) {
 }
 
 xt::xarray<double> Model::getCoM() const {
-    return { x_CoM[0], y_CoM[0] };
+    return { x_CoM[0], y_CoM[0] }; //TODO: check if it is correct
 }
 
 
