@@ -6,12 +6,12 @@
 
 Model::Model(const mjModel* model, mjData* data): model(model), data(data) {
     g = model->opt.gravity[2];
-    // z_CoM = data->xipos[0][2]; TODO:revisar
+    x_CoM = { data->subtree_com[1 * 3], 0.0 }; 
+    y_CoM = { data->subtree_com[1 * 3 + 1], 0.0 };
+    z_CoM = data->subtree_com[1 * 3 + 2];
     w = std::sqrt(g / z_CoM);
-    px = 0.0; //TODO:calcular con mujoco
-    py = 0.0; //TODO: calcular con mujoco
-    // x_CoM = { data->xipos[0], 0.0 }; //TODO:revisar x0
-    // y_CoM = { data->xipos[1], 0.0 }; //TODO: revisar el y0
+    // px = 0.0; //TODO:calcular con mujoco
+    // py = 0.0; //TODO: calcular con mujoco
 }
 
 void Model::computeA(double t, xt::xarray<double>& A) {

@@ -19,7 +19,7 @@ private:
     const mjModel* model;
     mjData* data;
     double g;                   //gravity
-    double z_CoM;               // center of mass in z
+    double z_CoM;         // center of mass in z
     double w;                   // natural frequency
     double px, py;              // zero moment point
     xt::xarray<double> x_CoM;   // Current x CoM

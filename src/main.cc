@@ -1,8 +1,6 @@
-#include <iostream>
 #include <mujoco/mujoco.h>
 #include <GLFW/glfw3.h>
 #include <cstdio>
-#include "model/model.h"
 #include "visualization/visualization.h"
 
 mjvScene scn; //scene                      
@@ -15,18 +13,6 @@ mjModel* model = nullptr; // mujoco model
 int main(int argc, char **argv) {
     model = mj_loadXML("anybotics_anymal_b/scene.xml", nullptr, nullptr, 0);
     data = mj_makeData(model);
-
-    //create a state-space model
-    Model discreteModel(model, data, 1e-6, false);
-
-    //compute transition matrices
-    discreteModel.computeTransitionMatrices();
-
-    // Print the sizes of the matrices
-    std::cout << "Matrix A size: " << discreteModel.getA().size() << std::endl;
-    std::cout << "Matrix B size: " << discreteModel.getB().size() << std::endl;
-    std::cout << "Matrix C size: " << discreteModel.getC().size() << std::endl;
-    std::cout << "Matrix D size: " << discreteModel.getD().size() << std::endl;
 
     //init GLFW
     if (!glfwInit()) {
