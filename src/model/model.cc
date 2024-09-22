@@ -10,8 +10,8 @@ Model::Model(const mjModel* model, mjData* data): model(model), data(data) {
     y_CoM = { data->subtree_com[1 * 3 + 1], 0.0 };
     z_CoM = data->subtree_com[1 * 3 + 2];
     w = std::sqrt(g / z_CoM);
-    // px = 0.0; //TODO:calcular con mujoco
-    // py = 0.0; //TODO: calcular con mujoco
+    px = data->subtree_com[1 * 3];
+    py = data->subtree_com[1 * 3 + 1];
 }
 
 void Model::computeA(double t, xt::xarray<double>& A) {
