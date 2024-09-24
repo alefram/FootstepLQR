@@ -3,6 +3,7 @@
 #include <mujoco/mujoco.h>
 #include <xtensor/xarray.hpp>
 #include <xtensor/xshape.hpp>
+#include <xtensor/xtensor_forward.hpp>
 
 Model::Model(const mjModel* model, mjData* data): model(model), data(data) {
     g = model->opt.gravity[2];
@@ -31,6 +32,26 @@ void Model::computeB(double t, xt::xarray<double>& B) {
 
 void Model::step(double dt) {
     //TODO: crear implementación
+    
+    //current time
+    double t = data->time;
+
+    //compute the matrices
+    xt::xarray<double> A, B;
+    computeA(t, A);
+    computeB(t, B);
+
+    //Get current CoM state
+    xt::xarray<double> x_CoM_current = x_CoM;
+    xt::xarray<double> y_CoM_current = y_CoM;
+
+    //update CoM position
+    xt::xarray<double> x_CoM_next = A * x_CoM_current + B * px;
+    xt::xarray<double> y_CoM_next = A * y_CoM_current + B * py;
+
+    //update internal states
+    x_CoM = x_CoM_next;
+    y_CoM = y_CoM_next;
 }
 
 xt::xarray<double> Model::getCoM() const {
