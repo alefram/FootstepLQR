@@ -30,9 +30,11 @@ void Model::computeB(double t, xt::xarray<double>& B) {
     B = xt::xarray<double>({{1 - cosh_wt, -w * sinh_wt}});
 }
 
+void Model::setLimitationMatrix(double p_x0, const xt::xarray<double>& p_x, double d) {
+    //TODO:implements limitation matrix
+}
+
 void Model::step(double dt) {
-    //TODO: crear implementación
-    
     //current time
     double t = data->time;
 
@@ -52,6 +54,8 @@ void Model::step(double dt) {
     //update internal states
     x_CoM = x_CoM_next;
     y_CoM = y_CoM_next;
+
+    //TODO:set limitations based on current positions
 }
 
 xt::xarray<double> Model::getCoM() const {
