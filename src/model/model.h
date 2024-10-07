@@ -27,7 +27,7 @@ private:
 
     void computeA(double t, xt::xarray<double>& A);
     void computeB(double t, xt::xarray<double>& B);
-    void setLimitationMatrix(double p_x0, const xt::xarray<double>&p_x, double d);
+    bool checkLimitation(double d, double p_x0);
 };
 
 #endif // MODEL_H

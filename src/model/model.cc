@@ -30,8 +30,15 @@ void Model::computeB(double t, xt::xarray<double>& B) {
     B = xt::xarray<double>({{1 - cosh_wt, -w * sinh_wt}});
 }
 
-void Model::setLimitationMatrix(double p_x0, const xt::xarray<double>& p_x, double d) {
-    //TODO:implements limitation matrix
+bool Model::checkLimitation(double d, double p_x0) {
+    double left = p_x0 - d;
+    double right = p_x0 + d;
+
+    if (left <= px && px <= right) {
+        return true;
+    } 
+
+    return false;
 }
 
 void Model::step(double dt) {
