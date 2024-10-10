@@ -41,6 +41,14 @@ bool Model::checkLimitation(double d, double p_x0) {
     return false;
 }
 
+void Model::computeZMP() {
+    //TODO: define parameters and implement the MPC
+}
+
+void Model::computeFootTrayectory() {
+    //TODO: implement its get the px and px of each foot
+}
+
 void Model::step(double dt) {
     //current time
     double t = data->time;
@@ -63,10 +71,14 @@ void Model::step(double dt) {
     y_CoM = y_CoM_next;
 
     //TODO:set limitations based on current positions
+    
+    //TODO:calculate and update px, py
 }
 
 xt::xarray<double> Model::getCoM() const {
     return { x_CoM[0], y_CoM[0] }; //TODO: check if it is correct
 }
 
-
+xt::xarray<double> Model::getZMP() const {
+    return { px, py };
+}

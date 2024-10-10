@@ -14,7 +14,10 @@ public:
 
     //get the current center of mass coordinate
     xt::xarray<double> getCoM() const;
-    
+
+    // get the current ZMP 
+    xt::xarray<double> getZMP() const;
+
 private:
     const mjModel* model;
     mjData* data;
@@ -27,7 +30,9 @@ private:
 
     void computeA(double t, xt::xarray<double>& A);
     void computeB(double t, xt::xarray<double>& B);
+    void computeZMP();
     bool checkLimitation(double d, double p_x0);
+    void computeFootTrayectory();
 };
 
 #endif // MODEL_H

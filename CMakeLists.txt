@@ -14,13 +14,13 @@ enable_language(CXX)
 set(SOURCE_DIR src)
 set(HEADER_DIR src/visualization)
 set(HEADER_DIR src/model)
-set(HEADER_DIR src/planner)
+set(HEADER_DIR src/controller)
 
 add_executable(qldsim 
     ${SOURCE_DIR}/main.cc
     ${SOURCE_DIR}/visualization/visualization.cc
     ${SOURCE_DIR}/model/model.cc
-    ${SOURCE_DIR}/planner/planner.cc
+    ${SOURCE_DIR}/controller/controller.cc
 )
 
 #add mujoco library
